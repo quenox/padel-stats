@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel Stats Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app-container">
+
+        <!-- === SETUP SCREEN === -->
+        <div id="setup-screen" class="screen">
+            <h1>Configuración del Partido</h1>
+            <div class="player-inputs">
+                <label>Jugador 1: <input type="text" id="player1-name" value="Jugador 1"></label>
+                <label>Jugador 2: <input type="text" id="player2-name" value="Jugador 2"></label>
+            </div>
+            <div class="player-inputs">
+                <label>Jugador 3: <input type="text" id="player3-name" value="Jugador 3"></label>
+                <label>Jugador 4: <input type="text" id="player4-name" value="Jugador 4"></label>
+            </div>
+            <div class="settings-inputs">
+                 <label for="num-sets">Partido al mejor de:</label>
+                 <select id="num-sets">
+                     <option value="3" selected>3 sets</option>
+                     <option value="5">5 sets</option>
+                 </select>
+            </div>
+             <div class="settings-inputs">
+                 <label for="first-server">Empieza sacando:</label>
+                 <select id="first-server">
+                     <option value="1">Jugador 1</option>
+                     <option value="3">Jugador 3</option>
+                     <!-- Se podría añadir J2 y J4 si se desea más flexibilidad -->
+                 </select>
+            </div>
+            <button id="start-match-btn">Empezar Partido</button>
+        </div>
+
+        <!-- === MATCH SCREEN === -->
+        <div id="match-screen" class="screen hidden">
+            <h2>Marcador</h2>
+            <div id="scoreboard">
+                <div class="team">
+                    <div class="team-names">
+                        <span id="p1-name-display">P1</span> / <span id="p2-name-display">P2</span>
+                    </div>
+                     <div class="score-sets" id="team1-sets">0</div>
+                    <div class="score-games" id="team1-games">0</div>
+                    <div class="score-points" id="team1-points">0</div>
+                </div>
+                 <div class="separator">vs</div>
+                 <div class="team">
+                     <div class="team-names">
+                         <span id="p3-name-display">P3</span> / <span id="p4-name-display">P4</span>
+                    </div>
+                    <div class="score-sets" id="team2-sets">0</div>
+                    <div class="score-games" id="team2-games">0</div>
+                    <div class="score-points" id="team2-points">0</div>
+                </div>
+            </div>
+            <div id="server-indicator">Sacador: <span id="current-server-name">---</span></div>
+
+            <div id="point-recorder">
+                <h3>Registrar Punto</h3>
+                <p>¿Quién ganó el punto y cómo?</p>
+
+                <div class="point-options">
+                    <h4>Punto para <span class="team1-inline-name">Equipo 1</span></h4>
+                    <button class="point-btn" data-team-won="0" data-type="winner" data-player-ref="1">Winner J1</button>
+                    <button class="point-btn" data-team-won="0" data-type="winner" data-player-ref="2">Winner J2</button>
+                    <button class="point-btn" data-team-won="0" data-type="unforcedError" data-player-ref="3">Error NF J3</button>
+                    <button class="point-btn" data-team-won="0" data-type="unforcedError" data-player-ref="4">Error NF J4</button>
+                </div>
+
+                <div class="point-options">
+                     <h4>Punto para <span class="team2-inline-name">Equipo 2</span></h4>
+                    <button class="point-btn" data-team-won="1" data-type="winner" data-player-ref="3">Winner J3</button>
+                    <button class="point-btn" data-team-won="1" data-type="winner" data-player-ref="4">Winner J4</button>
+                    <button class="point-btn" data-team-won="1" data-type="unforcedError" data-player-ref="1">Error NF J1</button>
+                    <button class="point-btn" data-team-won="1" data-type="unforcedError" data-player-ref="2">Error NF J2</button>
+                </div>
+            </div>
+
+            <div class="match-controls">
+                <button id="undo-btn" disabled>Deshacer Último Punto</button>
+                <button id="finish-match-btn">Finalizar Partido</button>
+            </div>
+        </div>
+
+        <!-- === STATS SCREEN === -->
+        <div id="stats-screen" class="screen hidden">
+            <h2>Estadísticas Finales</h2>
+            <div id="final-result">Resultado: ---</div>
+            <div id="stats-details">
+                <!-- Stats will be populated here by JS -->
+            </div>
+             <div id="point-history-log" style="margin-top: 20px; font-size: 0.8em; max-height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 5px;">
+                <h4>Historial de Puntos (Debug)</h4>
+                <!-- History log for verification -->
+             </div>
+            <button id="new-match-btn">Nuevo Partido</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
