@@ -18,8 +18,8 @@
         <div class="version-badge" onclick="toggleChangelog()">v2.0</div>
         <div class="changelog" id="changelog">
           <strong>Changelog:</strong><br>
-          - El Bug del botón Deshacer Último Punto fue corregido<br>
-          <em>Fecha: 21-04-2025</em>
+          - Bug del botón Deshacer Último Punto corregido <em> 21-04-2025</em> <br>
+          - Ya se puede consultar por el resultado de cada set jugado <em> 22-04-2025</em> <br>
         </div>
         <div class="player-input-group">
             <label for="player1-name">Jugador 1 (Equipo 1):</label>
@@ -53,7 +53,6 @@
 
     <!-- SECCIÓN DE JUEGO -->
     <section id="game">
-        <h2>Partido en Juego</h2>
 
         <!-- Marcador -->
         <div id="scoreboard">
@@ -61,11 +60,11 @@
             <div class="score-display">
                 <div>
                     <span class="team-label">Equipo 1 (<span id="team1-names"></span>)</span>
-                    Sets: <span id="team1-sets">0</span> | Juegos: <span id="team1-games">0</span> | Puntos: <span id="team1-points" class="points">0</span>
+                    Sets: <span id="team1-sets">0</span> | Juegos: <span id="team1-games">0</span> <br> <span id="team1-points" class="points">0</span>
                 </div>
                 <div>
                     <span class="team-label">Equipo 2 (<span id="team2-names"></span>)</span>
-                    Sets: <span id="team2-sets">0</span> | Juegos: <span id="team2-games">0</span> | Puntos: <span id="team2-points" class="points">0</span>
+                    Sets: <span id="team2-sets">0</span> | Juegos: <span id="team2-games">0</span> <br> <span id="team2-points" class="points">0</span>
                 </div>
             </div>
              <div id="tiebreak-score" class="hidden" style="margin-top: 10px; font-weight: bold; color: #dc3545;">
@@ -118,6 +117,7 @@
         <div id="game-controls">
             <button id="undo-point" disabled>Deshacer Último Punto</button>
             <button id="finish-game">Finalizar Partido</button>
+            <button id="historial-sets">Historial Sets</button>
         </div>
     </section>
 
@@ -170,7 +170,7 @@
             </div>
         </div>
 
-         <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Nuevo Partido</button>
+         <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; display: block; margin-left: auto; margin-right: auto;">Nuevo Partido</button>
     </section>
 
 </div>
@@ -215,6 +215,8 @@
     const pointRecorder = document.getElementById('point-recorder');
     const undoButton = document.getElementById('undo-point');
     const finishButton = document.getElementById('finish-game');
+    const historialSetsButton = document.getElementById('historial-sets');
+
 
     // Estadísticas
     const statsTbody = document.getElementById('stats-tbody');
@@ -228,6 +230,7 @@
     // Estado del juego
     let gameState = {};
     let pointHistory = []; // Para deshacer
+    let setTerminados = []; //agregada por mi para guardar los sets junto a los resultados de los partidos
 
     const pointValues = ['0', '15', '30', '40', 'AD']; // Para marcador normal
     const playerColors = ['#0d6efd', '#6f42c1', '#198754', '#fd7e14']; // Colores para visualizaciones
@@ -402,14 +405,17 @@
         if ((score1 >= 7 || score2 >= 7) && Math.abs(score1 - score2) >= 2) {
             console.log(`Tiebreak won by Team ${winnerTeam + 1}`);
             winSet(winnerTeam);
+            setTerminados.push(`Gana Team ${winnerTeam + 1}: 7 - 6 Tiebreak`);
+            console.log(setTerminados);
+
             gameState.score.isTiebreak = false; // Salir del modo tiebreak
         } else {
-             // Cambiar sacador en tiebreak: 1º punto saca normal, luego cada 2 puntos
-             const totalPointsPlayed = score1 + score2;
-             if (totalPointsPlayed % 2 === 1) {
-                  updateServer(); // Cambia cada 2 puntos (después del primero)
-                  console.log("Tiebreak server changed.");
-             }
+            // Cambiar sacador en tiebreak: 1º punto saca normal, luego cada 2 puntos
+            const totalPointsPlayed = score1 + score2;
+            if (totalPointsPlayed % 2 === 1) {
+                updateServer(); // Cambia cada 2 puntos (después del primero)
+                console.log("Tiebreak server changed.");
+            }
         }
     }
 
@@ -426,6 +432,8 @@
         if ((games1 >= 6 || games2 >= 6) && Math.abs(games1 - games2) >= 2) {
             console.log("Set won normally by Team " + (winnerTeam + 1));
             winSet(winnerTeam);
+            setTerminados.push(`Gana Team ${winnerTeam + 1}: ${games1} - ${games2}`);
+            console.log(setTerminados);
         } else if (games1 === 6 && games2 === 6) {
             console.log("Set reaches 6-6. Starting Tiebreak.");
             gameState.score.isTiebreak = true;
@@ -469,7 +477,7 @@
         if (pointHistory.length > 20) { // Limitar historial para no consumir mucha memoria
             pointHistory.shift();
         }
-         undoButton.disabled = pointHistory.length <= 1;
+        undoButton.disabled = pointHistory.length <= 1;
     }
 
     function undoLastPoint() {
@@ -492,6 +500,10 @@
         //    porque ya no es un estado "pasado", sino el "actual".
         pointHistory.pop();
 
+        if ( setTerminados.length > gameState.score.sets[0] + gameState.score.sets[1] )
+            setTerminados.pop();
+            console.log(setTerminados);
+
         console.log("Undo successful. Restored state:", JSON.parse(JSON.stringify(gameState)));
         updateUI();
 
@@ -508,6 +520,51 @@
         gameSection.style.display = 'none';
         statsSection.style.display = 'block';
         calculateAndDisplayStats();
+    }
+
+    // Definición de la función para abrir el modal
+    function openHistorialSets() {
+        const modalOverlay = document.createElement('div');
+        modalOverlay.classList.add('modal-overlay');
+
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('modal-content');
+
+        modalContent.innerHTML = `
+            <h2>Historial de Sets</h2>
+            ${setTerminados.length === 0 
+                ? '<p>Aún no se ha finalizado ningún set.</p>' 
+                : `<ul>${setTerminados.map((item, index) => `<li>Set ${index + 1} => ${item}</li>`).join('')}</ul>`
+            }
+            <button class="close-button">&times;</button> `;
+
+        // 4. Añade el contenido al overlay
+        modalOverlay.appendChild(modalContent);
+
+        // 5. Añade el modal (el overlay) al cuerpo del documento
+        document.body.appendChild(modalOverlay);
+
+        // 6. Añade eventos para cerrar el modal
+
+        // Cerrar haciendo clic en el botón de cerrar
+        const closeButton = modalContent.querySelector('.close-button');
+        closeButton.addEventListener('click', closeModal);
+
+        // Cerrar haciendo clic fuera del contenido del modal (en el overlay)
+        modalOverlay.addEventListener('click', (event) => {
+            // Asegúrate de que el click sea directamente en el overlay y no en el contenido del modal
+            if (event.target === modalOverlay) {
+                closeModal();
+            }
+        });
+    }
+
+    // Función para cerrar el modal
+    function closeModal() {
+        const modalOverlay = document.querySelector('.modal-overlay');
+        if (modalOverlay) {
+            modalOverlay.remove(); // Elimina el modal del DOM
+        }
     }
 
     function calculateAndDisplayStats() {
@@ -602,6 +659,7 @@
 
     undoButton.addEventListener('click', undoLastPoint);
     finishButton.addEventListener('click', finishMatch);
+    historialSetsButton.addEventListener('click', openHistorialSets);
 
 </script>
 
