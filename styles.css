@@ -1,0 +1,257 @@
+/* Estilos CSS (incorporados para simplicidad) */
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .version-badge {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: #ff4757;
+      color: white;
+      font-weight: bold;
+      padding: 0.3rem 0.7rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+      z-index: 1000;
+    }
+
+    .version-badge:hover {
+      background-color: #e84118;
+    }
+
+    .changelog {
+      display: none;
+      position: fixed;
+      top: 3.5rem;
+      right: 1rem;
+      background-color: white;
+      color: #2f3542;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      max-width: 300px;
+      font-size: 0.9rem;
+      z-index: 1000;
+    }
+
+    h1, h2, h3 {
+        color: #0056b3; /* Azul Padel */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Secciones */
+    #setup, #game, #stats {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    #game, #stats {
+        display: none; /* Ocultas por defecto */
+    }
+
+    #stats-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      cursor: ew-resize; /* Opcional: sugiere que se puede arrastrar */
+      position: relative;
+    }
+    
+    /* Scrollbar más visible y estilizada (opcional) */
+    #stats-table::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    #stats-table::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    /* Setup Form */
+    .player-input-group {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+    .player-input-group label {
+        font-weight: bold;
+        flex-basis: 100px; /* Alineación */
+    }
+    .player-input-group input[type="text"] {
+        flex-grow: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .config-option label {
+        margin-right: 15px;
+    }
+
+    /* Marcador */
+    #scoreboard {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    #scoreboard h3 { margin-bottom: 10px; }
+    .score-display {
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.4em;
+        font-weight: bold;
+    }
+    .score-display div { min-width: 100px; }
+    .score-display .team-label { font-size: 0.8em; font-weight: normal; color: #555; display: block; margin-bottom: 5px;}
+    .points { color: #d9534f; /* Rojo para puntos */ }
+
+    /* Info Juego */
+    #game-info {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.1em;
+    }
+    #current-server { font-weight: bold; color: #0275d8; }
+
+    /* Botones de Acción */
+    #point-recorder {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    .player-actions h4 {
+        margin-bottom: 10px;
+        text-align: center;
+        background-color: #f0f0f0;
+        padding: 5px;
+        border-radius: 3px;
+    }
+    .player-actions button, #game-controls button {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.2s ease;
+    }
+
+    .win-button { background-color: #5cb85c; color: white; }
+    .win-button:hover { background-color: #4cae4c; }
+    .error-button { background-color: #f0ad4e; color: white; }
+    .error-button:hover { background-color: #ec971f; }
+    .ace-button { background-color: #0275d8; color: white; }
+    .ace-button:hover { background-color: #025aa5; }
+    .df-button { background-color: #d9534f; color: white; }
+    .df-button:hover { background-color: #c9302c; }
+
+    #game-controls {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        gap: 10px;
+    }
+    #undo-point { background-color: #777; color: white; }
+    #undo-point:hover { background-color: #666; }
+    #finish-game { background-color: #d9534f; color: white; }
+    #finish-game:hover { background-color: #c9302c; }
+
+
+    /* Estadísticas Finales */
+    #stats-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    #stats-table th, #stats-table td {
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        text-align: center;
+    }
+    #stats-table th {
+        background-color: #0056b3;
+        color: white;
+    }
+    #stats-table tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    /* Visualizaciones */
+    #stats-visuals { margin-top: 30px; }
+    .stat-vis { margin-bottom: 15px; }
+    .stat-vis h4 { margin-bottom: 8px; text-align: left; }
+    .progress-bar-container {
+        background-color: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 25px;
+        margin-bottom: 5px;
+        display: flex; /* Para barras apiladas */
+    }
+    .progress-bar {
+        /* background-color: #5cb85c; */ /* Color se asignará dinámicamente */
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.8em;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: width 0.5s ease-in-out;
+    }
+    .player-colors {
+        display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; font-size: 0.9em;
+    }
+    .player-colors span { display: inline-flex; align-items: center; gap: 5px;}
+    .color-box { width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc;}
+
+    /* Utilidades */
+    .hidden { display: none; }
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    /* Responsividad básica */
+     @media (max-width: 600px) {
+        .player-input-group { flex-direction: column; gap: 5px; }
+        .player-input-group label { flex-basis: auto; }
+        .score-display { font-size: 1.2em; flex-wrap: wrap; }
+        .score-display div { min-width: 80px; margin-bottom: 10px;}
+        #point-recorder { grid-template-columns: 1fr 1fr; } /* 2 columnas en móvil */
+        #game-controls { flex-direction: column; }
+    }
+    @media (max-width: 768px) {
+      th, td {
+        font-size: 12px; /* Puedes ajustar el tamaño a lo que necesites */
+      }
+    }
