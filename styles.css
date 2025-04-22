@@ -245,7 +245,7 @@ body {
      @media (max-width: 600px) {
         .player-input-group { flex-direction: column; gap: 5px; }
         .player-input-group label { flex-basis: auto; }
-        .score-display { font-size: 1.2em; flex-wrap: wrap; }
+        .score-display { font-size: 1em; flex-wrap: wrap; }
         .score-display div { min-width: 80px; margin-bottom: 10px;}
         #point-recorder { grid-template-columns: 1fr 1fr; } /* 2 columnas en móvil */
         #game-controls { flex-direction: column; }
@@ -255,3 +255,47 @@ body {
         font-size: 12px; /* Puedes ajustar el tamaño a lo que necesites */
       }
     }
+
+
+
+
+
+
+
+
+/* Estilos para el fondo oscuro del modal */
+.modal-overlay {
+    position: fixed; /* Cubre toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
+    display: flex; /* Para centrar el contenido */
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+}
+
+/* Estilos para el contenido del modal */
+.modal-content {
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 500px; /* Ancho máximo del modal */
+    width: 90%; /* Ancho responsivo */
+    position: relative; /* Para posicionar el botón de cerrar */
+}
+
+/* Estilos para el botón de cerrar (opcional) */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
