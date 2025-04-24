@@ -237,6 +237,7 @@
     let gameState = {};
     let pointHistory = []; // Para deshacer
     let setTerminados = []; //agregada por mi para guardar los sets junto a los resultados de los partidos
+    let dateEndMatch = ''; //fecha cuando se dió en el botón finalizar partido
 
     const pointValues = ['0', '15', '30', '40', 'AD']; // Para marcador normal
     const playerColors = ['#0d6efd', '#6f42c1', '#198754', '#fd7e14']; // Colores para visualizaciones
@@ -526,6 +527,7 @@
         gameSection.style.display = 'none';
         statsSection.style.display = 'block';
         calculateAndDisplayStats();
+        dateEndMatch = obtenerFechaActualDDMMYYYY();
     }
 
     // Definición de la función para abrir el modal
@@ -652,7 +654,8 @@
     }
 
     function shareResultOnWhatsapp() {
-        let mensaje = "🏆 Resultados del juego:\n\n";
+        let mensaje = "🏆 Resultados del juego\n";
+        mensaje += dateEndMatch + "\n\n";
 
         // Asegurarse de que gameState esté definido y accesible en este ámbito
         if (typeof gameState === 'undefined' || !gameState.players)
@@ -664,8 +667,11 @@
                 const percentageW = stats.pointsWon > 0 ? ((stats.W + stats.Ace) / stats.pointsWon * 100).toFixed(1) : '0.0';
                 const percentageUE = stats.pointsLost > 0 ? ((stats.UE + stats.DF) / stats.pointsLost * 100).toFixed(1) : '0.0';
 
+                if ( index == 2 )
+                    mensaje += `\n`;
+
                 mensaje += `👤 ${player.name}\n`;
-                mensaje += `✅ Winners: ${stats.W} | ⚠️ Errores no forzados: ${stats.UE}\n`;
+                mensaje += `✅ Winners: ${stats.W} | ⚠️ Errores N.F: ${stats.UE}\n`;
                 mensaje += `🎯 Aces: ${stats.Ace} | ❌ Doble falta: ${stats.DF}\n`;
                 mensaje += `🎾 Total puntos jugados: ${totalPointsPlayed}\n`;
                 mensaje += `📊 %Winners: ${percentageW}% | %Errores: ${percentageUE}%\n\n`;
@@ -674,6 +680,14 @@
 
         const url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
         window.open(url, '_blank');
+    }
+
+    function obtenerFechaActualDDMMYYYY() {
+        let fechaActual = new Date();
+        let dia = String(fechaActual.getDate()).padStart(2, '0'); // Día con dos dígitos
+        let mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Mes con dos dígitos
+        let año = fechaActual.getFullYear(); // Año completo
+        return `${dia}/${mes}/${año}`;
     }
 
 
