@@ -147,6 +147,10 @@
             </tbody>
         </table>
 
+        <button id="shareWhatsappBtn" class="whatsapp-share-button">
+            Compartir resultados
+        </button>
+
         <div id="stats-visuals">
             <h3>Visualización de Estadísticas</h3>
             <div class="player-colors" id="player-legend">
@@ -218,7 +222,7 @@
     const undoButton = document.getElementById('undo-point');
     const finishButton = document.getElementById('finish-game');
     const historialSetsButton = document.getElementById('historial-sets');
-
+    const shareResultOnWhatsappButton = document.getElementById('shareWhatsappBtn');
 
     // Estadísticas
     const statsTbody = document.getElementById('stats-tbody');
@@ -647,6 +651,32 @@
         });
     }
 
+    function shareResultOnWhatsapp() {
+        let mensaje = "🏆 Resultados del juego:\n\n";
+
+        // Asegurarse de que gameState esté definido y accesible en este ámbito
+        if (typeof gameState === 'undefined' || !gameState.players)
+            mensaje += "No se pudieron cargar los resultados del juego.";
+        else {
+            gameState.players.forEach((player, index) => {
+                const stats = player.stats;
+                const totalPointsPlayed = stats.pointsWon + stats.pointsLost;
+                const percentageW = stats.pointsWon > 0 ? ((stats.W + stats.Ace) / stats.pointsWon * 100).toFixed(1) : '0.0';
+                const percentageUE = stats.pointsLost > 0 ? ((stats.UE + stats.DF) / stats.pointsLost * 100).toFixed(1) : '0.0';
+
+                mensaje += `👤 ${player.name}\n`;
+                mensaje += `✅ Winners: ${stats.W} | ⚠️ Errores no forzados: ${stats.UE}\n`;
+                mensaje += `🎯 Aces: ${stats.Ace} | ❌ Doble falta: ${stats.DF}\n`;
+                mensaje += `🎾 Total puntos jugados: ${totalPointsPlayed}\n`;
+                mensaje += `📊 %Winners: ${percentageW}% | %Errores: ${percentageUE}%\n\n`;
+            });
+        }
+
+        const url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
+        window.open(url, '_blank');
+    }
+
+
 
     // --- EVENT LISTENERS ---
     startGameButton.addEventListener('click', initializeGame);
@@ -659,11 +689,15 @@
         }
     });
 
+
     undoButton.addEventListener('click', undoLastPoint);
     finishButton.addEventListener('click', finishMatch);
+    // Para abrir el modal que muestra los resultados de cada set ya jugado
     document.querySelectorAll('.boton-historial').forEach(button => {
         button.addEventListener('click', openHistorialSets);
     });
+
+    shareResultOnWhatsappButton.addEventListener('click', shareResultOnWhatsapp);
 </script>
 
 </body>
