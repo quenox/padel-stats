@@ -188,7 +188,7 @@ body {
     #stats-table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     #stats-table th, #stats-table td {
         border: 1px solid #ddd;
@@ -299,3 +299,40 @@ body {
     border: none;
     background: none;
 }
+
+
+
+.whatsapp-share-button {
+    display: inline-block;
+    background-color: #25D366; /* Verde principal de WhatsApp */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    transform: scale(0.8);
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.whatsapp-share-button:hover {
+    background-color: #1DA851; /* Un verde ligeramente más oscuro para el hover */
+}
+
+.whatsapp-share-button:active {
+    background-color: #128C7E; /* Un verde más oscuro para el estado activo/click */
+}
+
+/* Si quieres añadir un icono de WhatsApp, necesitarás una librería de iconos como Font Awesome */
+/* Por ejemplo, si usas Font Awesome, podrías añadir un <i> tag dentro del button y estilizarlo */
+/*
+.whatsapp-share-button i {
+    margin-right: 8px;
+}
+*/
