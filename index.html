@@ -677,8 +677,8 @@
             });
         }
 
-        mensaje += `Sets: ${gameState.score.sets[0]} - ${gameState.score.sets[1]} 👈 \n`;
-        mensaje += `${setTerminados.map((item, index) => `  * Set ${index + 1} => ${item}`).join('\n')}`;
+        mensaje += `Sets 👇\n`;
+        mensaje += `${setTerminados.map((item, index) => `  * Set ${index + 1}👉${item}`).join('\n')}`;
 
         const url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
         window.open(url, '_blank');
