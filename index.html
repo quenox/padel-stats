@@ -117,7 +117,7 @@
         <div id="game-controls">
             <button id="undo-point" disabled>Deshacer Último Punto</button>
             <button id="finish-game">Finalizar Partido</button>
-            <button id="historial-sets" class="boton-historial">Historial Sets</button>
+            <button class="boton-historial">Historial Sets</button>
         </div>
     </section>
 
@@ -221,7 +221,6 @@
     const pointRecorder = document.getElementById('point-recorder');
     const undoButton = document.getElementById('undo-point');
     const finishButton = document.getElementById('finish-game');
-    const historialSetsButton = document.getElementById('historial-sets');
     const shareResultOnWhatsappButton = document.getElementById('shareWhatsappBtn');
 
     // Estadísticas
@@ -677,6 +676,9 @@
                 mensaje += `📊 %Winners: ${percentageW}% | %Errores: ${percentageUE}%\n\n`;
             });
         }
+
+        mensaje += `Sets: ${gameState.score.sets[0]} - ${gameState.score.sets[1]} 👈 \n`;
+        mensaje += `${setTerminados.map((item, index) => `  * Set ${index + 1} => ${item}`).join('\n')}`;
 
         const url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
         window.open(url, '_blank');
