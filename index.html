@@ -117,16 +117,16 @@
         <div id="game-controls">
             <button id="undo-point" disabled>Deshacer Último Punto</button>
             <button id="finish-game">Finalizar Partido</button>
-            <button id="historial-sets">Historial Sets</button>
+            <button id="historial-sets" class="boton-historial">Historial Sets</button>
         </div>
     </section>
 
     <!-- SECCIÓN DE ESTADÍSTICAS -->
     <section id="stats">
-        <h2>Estadísticas Finales</h2>
+        <h3>Estadísticas Finales</h3>
 
         <div id="final-score-summary" style="text-align: center; margin-bottom: 20px; font-size: 1.2em;">
-            Resultado Final: <span id="final-score-details"></span>
+            <button id="final-score-details" class="boton-historial" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 0 10px;">Ver detalle</button>
         </div>
 
         <table id="stats-table">
@@ -147,7 +147,7 @@
             </tbody>
         </table>
 
-         <div id="stats-visuals">
+        <div id="stats-visuals">
             <h3>Visualización de Estadísticas</h3>
             <div class="player-colors" id="player-legend">
                 <!-- Leyenda generada por JS -->
@@ -160,17 +160,19 @@
                 <h4>Errores No Forzados Totales</h4>
                 <div class="progress-bar-container" id="vis-ues"></div>
             </div>
-             <div class="stat-vis">
+            <div class="stat-vis">
                 <h4>Ases Totales</h4>
                 <div class="progress-bar-container" id="vis-aces"></div>
             </div>
-             <div class="stat-vis">
+            <div class="stat-vis">
                 <h4>Dobles Faltas Totales</h4>
                 <div class="progress-bar-container" id="vis-dfs"></div>
             </div>
         </div>
 
-         <button onclick="window.location.reload()" style="margin-top: 20px; padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; display: block; margin-left: auto; margin-right: auto;">Nuevo Partido</button>
+        <div style="text-align: center; margin-top: 20px;">
+            <button onclick="window.location.reload()" style="padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 0 10px;">Nuevo Partido</button>
+        </div>
     </section>
 
 </div>
@@ -569,7 +571,7 @@
 
     function calculateAndDisplayStats() {
         // Resumen final del marcador
-         finalScoreDetailsEl.textContent = `Sets: ${gameState.score.sets[0]} - ${gameState.score.sets[1]}`;
+         finalScoreDetailsEl.textContent = `Sets: ${gameState.score.sets[0]} - ${gameState.score.sets[1]} 👈`;
          // Podrías añadir el detalle de juegos por set si lo guardaras en historial
 
         // Calcular totales para porcentajes y visualizaciones
@@ -659,8 +661,9 @@
 
     undoButton.addEventListener('click', undoLastPoint);
     finishButton.addEventListener('click', finishMatch);
-    historialSetsButton.addEventListener('click', openHistorialSets);
-
+    document.querySelectorAll('.boton-historial').forEach(button => {
+        button.addEventListener('click', openHistorialSets);
+    });
 </script>
 
 </body>
