@@ -206,7 +206,7 @@ body {
     /* Visualizaciones */
     #stats-visuals { margin-top: 30px; }
     .stat-vis { margin-bottom: 15px; }
-    .stat-vis h4 { margin-bottom: 8px; text-align: left; }
+    .stat-vis h4 { margin-bottom: 8px; text-align: center; }
     .progress-bar-container {
         background-color: #e9ecef;
         border-radius: 5px;
@@ -229,7 +229,7 @@ body {
         transition: width 0.5s ease-in-out;
     }
     .player-colors {
-        display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; font-size: 0.9em;
+        justify-content: center; display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px; font-size: 0.9em;
     }
     .player-colors span { display: inline-flex; align-items: center; gap: 5px;}
     .color-box { width: 15px; height: 15px; display: inline-block; border: 1px solid #ccc;}
@@ -329,10 +329,47 @@ body {
     background-color: #128C7E; /* Un verde más oscuro para el estado activo/click */
 }
 
-/* Si quieres añadir un icono de WhatsApp, necesitarás una librería de iconos como Font Awesome */
-/* Por ejemplo, si usas Font Awesome, podrías añadir un <i> tag dentro del button y estilizarlo */
-/*
-.whatsapp-share-button i {
-    margin-right: 8px;
+
+
+
+#player-effectivity-bars {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-*/
+
+.effectivity-bar-wrapper {
+    width: 100%;
+    text-align: center;
+}
+
+.effectivity-bar {
+    position: relative;
+    height: 20px;
+    width: 100%;
+    background-color: #f0f0f0;
+    display: flex;
+    overflow: hidden;
+    border-radius: 6px;
+    color: white;
+}
+
+.effect-segment, .loss-segment {
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.midline {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: black;
+    opacity: 0.4;
+}
+
+.efectividad-personal {text-align: center;}
