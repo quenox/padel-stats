@@ -6,12 +6,18 @@ body {
     padding: 20px;
     background-color: #f4f4f4;
     color: #333;
+
+
+    background-image: url('background.jpg'); /* Reemplaza con la ruta de tu imagen */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .container {
         max-width: 800px;
         margin: auto;
-        background: #fff;
+        background-color: rgba(255, 255, 255, 0.8); /* blanco semitransparente */
         padding: 30px;
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -84,7 +90,7 @@ body {
     }
     
     #stats-table::-webkit-scrollbar-thumb {
-      background: #ccc;
+      background: #000000;
       border-radius: 3px;
     }
 
@@ -106,9 +112,22 @@ body {
         border-radius: 4px;
     }
 
+    .config-option label:has(input[type="radio"]:checked) {
+        font-weight: bold;
+    }
+
     .config-option label {
         margin-right: 15px;
     }
+
+    @media (max-width: 600px) {
+        .config-option label {
+            display: block; /* cada label ocupa toda la línea */
+            margin-right: 0; /* quitamos el margen derecho para que no quede raro */
+            margin-bottom: 10px; /* opcional: espacio entre los labels verticalmente */
+        }
+    }
+    
 
     /* Marcador */
     #scoreboard {
@@ -168,9 +187,14 @@ body {
     .error-button { background-color: #f0ad4e; color: white; }
     .error-button:hover { background-color: #ec971f; }
     .ace-button { background-color: #0275d8; color: white; }
-    .ace-button:hover { background-color: #025aa5; }
+    .ace-button:not(:disabled):hover {background-color: #025aa5;}
     .df-button { background-color: #d9534f; color: white; }
-    .df-button:hover { background-color: #c9302c; }
+    .df-button:not(:disabled):hover { background-color: #c9302c; }
+    .ace-button:disabled,
+    .df-button:disabled {
+        opacity: 0.1;
+        color: transparent;
+    }
 
     #game-controls {
         display: flex;
@@ -199,7 +223,7 @@ body {
         background-color: #0056b3;
         color: white;
     }
-    #stats-table tbody tr:nth-child(odd) {
+    #stats-table tbody tr {
         background-color: #f9f9f9;
     }
 
@@ -373,3 +397,4 @@ body {
 }
 
 .efectividad-personal {text-align: center;}
+
